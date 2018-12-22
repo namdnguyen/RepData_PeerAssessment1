@@ -1,17 +1,50 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
-output: 
+output:
   html_document:
     keep_md: true
 ---
 
+Load libraries and set code chunk defaults.
+
+```{r setup}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## Loading and preprocessing the data
 
+Load the data and display the first 6 rows.
 
+```{r results = 'asis'}
+file <- "activity.zip"
+df <- read_csv(file)
+print(head(df))
+```
 
 ## What is mean total number of steps taken per day?
 
+```{r histogram-daily-steps}
+daily <- df %>%
+  na.omit() %>%
+  group_by(date) %>%
+  summarize(total = sum(steps))
+
+ggplot(data=daily, aes(daily$total)) +
+  geom_histogram(binwidth = 1000, fill="steelblue") +
+  theme_minimal() +
+  labs(title = "Histogram of Total Daily Steps", x = "Total Daily Steps")
+```
+
+```{r}
+ave.steps <- format(mean(daily$total), scientific = FALSE)
+median.steps <- format(median(daily$total), scientific = FALSE)
+```
+
+The mean total number of steps taken each day is `r ave.steps` and the median total number of steps taken per day is `r median.steps`.
 
 
 ## What is the average daily activity pattern?
