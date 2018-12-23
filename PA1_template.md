@@ -203,3 +203,29 @@ median.steps.imputed <- format(median(daily.imputed$total), scientific = FALSE)
 The estimates of the mean and median do not really differ from the original data set with NA's. The impact from imputing missing values with the average steps across all days by interval of day is that the distribution of average daily steps is narrower, with more days centered on the mean.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+```r
+weekday.list <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+df.wkd <- imputed %>%
+  mutate(day = weekdays(date),
+         day = ifelse(day %in% weekday.list, 1, 0),
+         day = factor(day,
+                      levels = c(1,0),
+                      labels = c("weekday", "weekend")))
+
+by.interval.day <- df.wkd %>%
+  group_by(interval, day) %>%
+  summarize(ave = mean(steps))
+
+ggplot(data = by.interval.day, aes(x = interval, y = ave))+
+  geom_line(color = "steelblue", size = 2) +
+  theme_minimal() +
+  facet_wrap(~day, ncol = 1, nrow = 2) +
+  labs(title = "Ave Steps per Interval",
+       x = "Interval",
+       y = "Ave Steps per Interval")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
