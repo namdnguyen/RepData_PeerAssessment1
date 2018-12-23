@@ -1,5 +1,6 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
+author: Nam D. Nguyen
 output:
   prettydoc::html_pretty:
     theme: cayman
