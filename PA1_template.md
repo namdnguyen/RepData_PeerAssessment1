@@ -114,15 +114,92 @@ max.interval
 Interval **835** contains the maximum number of steps across all days (206.1698113 steps).
 
 ## Imputing missing values
+Calculate the total number of missing values from the entire data set.
+
 
 ```r
-na.count <- sum(is.na(df$steps))
+na.count <- sapply(df, function(x) sum(is.na(x)))
 na.count
 ```
 
 ```
-## [1] 2304
+##    steps     date interval 
+##     2304        0        0
 ```
-The total number of rows with NA's is **2304**.
+
+```r
+na.steps <- na.count[1]
+na.steps
+```
+
+```
+## steps 
+##  2304
+```
+
+Only the `steps` column contained NA's, which the total number of rows with NA's in the `steps` column is **2304**.
+
+Use the mean total daily steps to impute missing values for `steps` and verify that there are no more NA's.
+
+
+```r
+imputed <- df %>%
+  left_join(by.interval, by = "interval") %>%
+  mutate(steps = ifelse(is.na(steps), ave, steps)) %>%
+  select(-ave)
+
+sum(is.na(imputed$steps))
+```
+
+```
+## [1] 0
+```
+
+```r
+dim(imputed)
+```
+
+```
+## [1] 17568     3
+```
+
+```r
+dim(df)
+```
+
+```
+## [1] 17568     3
+```
+
+There are no more NA's after imputing, and we see that the number of rows match the original data set.
+
+
+```r
+daily.imputed <- imputed %>%
+  group_by(date) %>%
+  summarize(total = sum(steps))
+
+ggplot(data=daily.imputed, aes(daily.imputed$total)) +
+  geom_histogram(binwidth = 1000, fill="steelblue") +
+  theme_minimal() +
+  labs(title = "Histogram of Total Daily Steps with Imputed Values",
+       x = "Total Daily Steps",
+       y = "Count")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
+```r
+mean.steps.imputed <- format(mean(daily.imputed$total), scientific = FALSE)
+median.steps.imputed <- format(median(daily.imputed$total), scientific = FALSE)
+```
+
+**Total number of steps taken each day for data set with imputed values**
+
+- **Mean**:  10766.19
+- **Median**:  10766.19
+
+The estimates of the mean and median do not really differ from the original data set with NA's. The impact from imputing missing values with the average steps across all days by interval of day is that the distribution of average daily steps is narrower, with more days centered on the mean.
 
 ## Are there differences in activity patterns between weekdays and weekends?
