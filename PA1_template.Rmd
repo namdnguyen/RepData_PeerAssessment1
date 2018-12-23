@@ -1,17 +1,17 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
 output:
-  html_document:
-    keep_md: true
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 Load libraries and set code chunk defaults.
 
 ```{r setup}
 library(readr)
-library(dplyr)
 library(ggplot2)
-library(knitr)
+library(dplyr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Load the data and display the first 6 rows.
 
-```{r results = 'asis'}
+```{r results = 'markup'}
 file <- "activity.zip"
 df <- read_csv(file)
 print(head(df))
@@ -36,7 +36,7 @@ daily <- df %>%
 ggplot(data=daily, aes(daily$total)) +
   geom_histogram(binwidth = 1000, fill="steelblue") +
   theme_minimal() +
-  labs(title = "Histogram of Total Daily Steps", x = "Total Daily Steps")
+  labs(title = "Histogram of Total Daily Steps", x = "Total Daily Steps", y = "Count")
 ```
 
 ```{r}
@@ -48,7 +48,17 @@ The mean total number of steps taken each day is `r ave.steps` and the median to
 
 
 ## What is the average daily activity pattern?
+```{r}
+interval.ave <- df %>%
+  na.omit() %>%
+  group_by(interval) %>%
+  summarize(ave = mean(steps))
 
+ggplot(data = interval.ave, aes(x = interval, y = ave))+
+  geom_line(color = "#00AFBB", size = 2) +
+  theme_minimal() +
+  labs(title = "Time Series of Ave Steps per Interval", x = "Interval", y = "Ave Steps per Interval")
+```
 
 
 ## Imputing missing values
