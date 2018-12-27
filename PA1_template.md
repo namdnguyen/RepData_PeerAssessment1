@@ -62,7 +62,7 @@ daily <- df %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data = daily, aes(daily$total)) +
+ggplot(data = daily, aes(total)) +
   geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps",
@@ -180,7 +180,7 @@ daily.imputed <- imputed %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data = daily.imputed, aes(daily.imputed$total)) +
+ggplot(data = daily.imputed, aes(total)) +
   geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps with Imputed Values",
@@ -203,6 +203,27 @@ median.steps.imputed <- format(median(daily.imputed$total), scientific = FALSE)
 
 The estimates of the mean and median do not really differ from the original data set with NA's. The impact from imputing missing values with the average steps across all days by interval of day is that the distribution of average daily steps is narrower, with more days centered on the mean.
 
+If the histograms from the aggregated, original data set are overlaid with the one with imputed values, the distribution looks identical, except for the higher frequency around the mean in the imputed data set.
+
+
+```r
+daily <- daily %>%
+  mutate(imputed = "original")
+
+daily.merged <- daily.imputed %>%
+  mutate(imputed = "imputed") %>%
+  bind_rows(daily) %>%
+  mutate(imputed = as.factor(imputed))
+
+ggplot(data = daily.merged, aes(total, fill = imputed)) +
+  geom_histogram(binwidth = 1000, alpha = .5, position = "identity") +
+  theme_minimal() +
+  labs(title = "Overlay Histogram of Total Daily Steps",
+       x = "Total Daily Steps",
+       y = "Count")
+```
+
+![](PA1_template_files/figure-html/histogram-total-daily-overlay-1.png)<!-- -->
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
