@@ -93,7 +93,7 @@ by.interval <- df %>%
   summarize(ave = mean(steps))
 
 ggplot(data = by.interval, aes(x = interval, y = ave)) +
-  geom_line(color = "steelblue", size = 2) +
+  geom_line(color = "steelblue", size = 1) +
   theme_minimal() +
   labs(title = "Time Series of Ave Steps per Interval",
        x = "Interval",
@@ -221,7 +221,7 @@ by.interval.day <- df.wkd %>%
   summarize(ave = mean(steps))
 
 ggplot(data = by.interval.day, aes(x = interval, y = ave)) +
-  geom_line(color = "steelblue", size = 2) +
+  geom_line(color = "steelblue", size = 1) +
   theme_minimal() +
   facet_wrap(~day, ncol = 1, nrow = 2) +
   labs(title = "Ave Steps per Interval",
