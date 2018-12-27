@@ -35,8 +35,8 @@ daily <- df %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data=daily, aes(daily$total)) +
-  geom_histogram(binwidth = 1000, fill="steelblue") +
+ggplot(data = daily, aes(daily$total)) +
+  geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps",
        x = "Total Daily Steps",
@@ -55,13 +55,13 @@ median.steps <- format(median(daily$total), scientific = FALSE)
 
 
 ## What is the average daily activity pattern?
-```{r}
+```{r average-steps-per-interval}
 by.interval <- df %>%
   na.omit() %>%
   group_by(interval) %>%
   summarize(ave = mean(steps))
 
-ggplot(data = by.interval, aes(x = interval, y = ave))+
+ggplot(data = by.interval, aes(x = interval, y = ave)) +
   geom_line(color = "steelblue", size = 2) +
   theme_minimal() +
   labs(title = "Time Series of Ave Steps per Interval",
@@ -104,13 +104,13 @@ dim(df)
 
 There are no more NA's after imputing, and we see that the number of rows match the original data set.
 
-```{r}
+```{r histogram-imputed-steps}
 daily.imputed <- imputed %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data=daily.imputed, aes(daily.imputed$total)) +
-  geom_histogram(binwidth = 1000, fill="steelblue") +
+ggplot(data = daily.imputed, aes(daily.imputed$total)) +
+  geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps with Imputed Values",
        x = "Total Daily Steps",
@@ -131,7 +131,7 @@ The estimates of the mean and median do not really differ from the original data
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
+```{r weekday-vs-weekend}
 weekday.list <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
 
 df.wkd <- imputed %>%
@@ -145,7 +145,7 @@ by.interval.day <- df.wkd %>%
   group_by(interval, day) %>%
   summarize(ave = mean(steps))
 
-ggplot(data = by.interval.day, aes(x = interval, y = ave))+
+ggplot(data = by.interval.day, aes(x = interval, y = ave)) +
   geom_line(color = "steelblue", size = 2) +
   theme_minimal() +
   facet_wrap(~day, ncol = 1, nrow = 2) +

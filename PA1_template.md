@@ -31,9 +31,9 @@ df <- read_csv(file)
 ```
 ## Parsed with column specification:
 ## cols(
-##   steps = col_integer(),
+##   steps = col_double(),
 ##   date = col_date(format = ""),
-##   interval = col_integer()
+##   interval = col_double()
 ## )
 ```
 
@@ -44,7 +44,7 @@ print(head(df))
 ```
 ## # A tibble: 6 x 3
 ##   steps date       interval
-##   <int> <date>        <int>
+##   <dbl> <date>        <dbl>
 ## 1    NA 2012-10-01        0
 ## 2    NA 2012-10-01        5
 ## 3    NA 2012-10-01       10
@@ -62,8 +62,8 @@ daily <- df %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data=daily, aes(daily$total)) +
-  geom_histogram(binwidth = 1000, fill="steelblue") +
+ggplot(data = daily, aes(daily$total)) +
+  geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps",
        x = "Total Daily Steps",
@@ -92,7 +92,7 @@ by.interval <- df %>%
   group_by(interval) %>%
   summarize(ave = mean(steps))
 
-ggplot(data = by.interval, aes(x = interval, y = ave))+
+ggplot(data = by.interval, aes(x = interval, y = ave)) +
   geom_line(color = "steelblue", size = 2) +
   theme_minimal() +
   labs(title = "Time Series of Ave Steps per Interval",
@@ -100,7 +100,7 @@ ggplot(data = by.interval, aes(x = interval, y = ave))+
        y = "Ave Steps per Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](PA1_template_files/figure-html/average-steps-per-interval-1.png)<!-- -->
 
 
 ```r
@@ -180,15 +180,15 @@ daily.imputed <- imputed %>%
   group_by(date) %>%
   summarize(total = sum(steps))
 
-ggplot(data=daily.imputed, aes(daily.imputed$total)) +
-  geom_histogram(binwidth = 1000, fill="steelblue") +
+ggplot(data = daily.imputed, aes(daily.imputed$total)) +
+  geom_histogram(binwidth = 1000, fill = "steelblue") +
   theme_minimal() +
   labs(title = "Histogram of Total Daily Steps with Imputed Values",
        x = "Total Daily Steps",
        y = "Count")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](PA1_template_files/figure-html/histogram-imputed-steps-1.png)<!-- -->
 
 
 ```r
@@ -220,7 +220,7 @@ by.interval.day <- df.wkd %>%
   group_by(interval, day) %>%
   summarize(ave = mean(steps))
 
-ggplot(data = by.interval.day, aes(x = interval, y = ave))+
+ggplot(data = by.interval.day, aes(x = interval, y = ave)) +
   geom_line(color = "steelblue", size = 2) +
   theme_minimal() +
   facet_wrap(~day, ncol = 1, nrow = 2) +
@@ -229,4 +229,4 @@ ggplot(data = by.interval.day, aes(x = interval, y = ave))+
        y = "Ave Steps per Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekday-vs-weekend-1.png)<!-- -->

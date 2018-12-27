@@ -123,14 +123,14 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb2-2" title="2">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(file)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   steps = col_integer(),
+##   steps = col_double(),
 ##   date = col_date(format = &quot;&quot;),
-##   interval = col_integer()
+##   interval = col_double()
 ## )</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">print</span>(<span class="kw">head</span>(df))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   steps date       interval
-##   &lt;int&gt; &lt;date&gt;        &lt;int&gt;
+##   &lt;dbl&gt; &lt;date&gt;        &lt;dbl&gt;
 ## 1    NA 2012-10-01        0
 ## 2    NA 2012-10-01        5
 ## 3    NA 2012-10-01       10
@@ -145,8 +145,8 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">sum</span>(steps))</a>
 <a class="sourceLine" id="cb6-5" title="5"></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data=</span>daily, <span class="kw">aes</span>(daily<span class="op">$</span>total)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1000</span>, <span class="dt">fill=</span><span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data =</span> daily, <span class="kw">aes</span>(daily<span class="op">$</span>total)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1000</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of Total Daily Steps&quot;</span>,</a>
 <a class="sourceLine" id="cb6-10" title="10">       <span class="dt">x =</span> <span class="st">&quot;Total Daily Steps&quot;</span>,</a>
@@ -167,7 +167,7 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(interval) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ave =</span> <span class="kw">mean</span>(steps))</a>
 <a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data =</span> by.interval, <span class="kw">aes</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> ave))<span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data =</span> by.interval, <span class="kw">aes</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> ave)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-7" title="7"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Time Series of Ave Steps per Interval&quot;</span>,</a>
@@ -209,8 +209,8 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb21-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb21-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">sum</span>(steps))</a>
 <a class="sourceLine" id="cb21-4" title="4"></a>
-<a class="sourceLine" id="cb21-5" title="5"><span class="kw">ggplot</span>(<span class="dt">data=</span>daily.imputed, <span class="kw">aes</span>(daily.imputed<span class="op">$</span>total)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb21-6" title="6"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1000</span>, <span class="dt">fill=</span><span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="kw">ggplot</span>(<span class="dt">data =</span> daily.imputed, <span class="kw">aes</span>(daily.imputed<span class="op">$</span>total)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1000</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb21-7" title="7"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb21-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Histogram of Total Daily Steps with Imputed Values&quot;</span>,</a>
 <a class="sourceLine" id="cb21-9" title="9">       <span class="dt">x =</span> <span class="st">&quot;Total Daily Steps&quot;</span>,</a>
@@ -240,7 +240,7 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb23-11" title="11"><span class="st">  </span><span class="kw">group_by</span>(interval, day) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb23-12" title="12"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ave =</span> <span class="kw">mean</span>(steps))</a>
 <a class="sourceLine" id="cb23-13" title="13"></a>
-<a class="sourceLine" id="cb23-14" title="14"><span class="kw">ggplot</span>(<span class="dt">data =</span> by.interval.day, <span class="kw">aes</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> ave))<span class="op">+</span></a>
+<a class="sourceLine" id="cb23-14" title="14"><span class="kw">ggplot</span>(<span class="dt">data =</span> by.interval.day, <span class="kw">aes</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> ave)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb23-15" title="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb23-16" title="16"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb23-17" title="17"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>day, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">nrow =</span> <span class="dv">2</span>) <span class="op">+</span></a>
