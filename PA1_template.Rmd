@@ -24,7 +24,7 @@ Load the data and display the first 6 rows.
 ```{r results = 'markup'}
 file <- "activity.zip"
 df <- read_csv(file)
-print(head(df))
+head(df)
 ```
 
 ## What is mean total number of steps taken per day?
@@ -147,6 +147,7 @@ ggplot(data = daily.merged, aes(total, fill = imputed)) +
        x = "Total Daily Steps",
        y = "Count")
 ```
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```{r weekday-vs-weekend}

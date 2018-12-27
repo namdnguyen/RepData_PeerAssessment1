@@ -38,7 +38,7 @@ df <- read_csv(file)
 ```
 
 ```r
-print(head(df))
+head(df)
 ```
 
 ```
@@ -224,6 +224,7 @@ ggplot(data = daily.merged, aes(total, fill = imputed)) +
 ```
 
 ![](PA1_template_files/figure-html/histogram-total-daily-overlay-1.png)<!-- -->
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 
